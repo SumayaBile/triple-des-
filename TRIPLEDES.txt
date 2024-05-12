@@ -1,0 +1,42 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace SecurityLibrary.DES
+{
+    /// <summary>
+    /// If the string starts with 0x.... then it's Hexadecimal not string
+    /// </summary>
+    public class TripleDES : ICryptographicTechnique<string, List<string>>
+    {
+
+        public string Encrypt(string plainText, List<string> key)
+        {
+            DES desss = new DES();
+            string cText;
+            cText = desss.Encrypt(plainText, key[0]);
+            cText = desss.Decrypt(cText, key[1]);
+            cText = desss.Encrypt(cText, key[0]);
+            return cText;
+        }
+
+        public string Decrypt(string cipherText, List<string> key)
+        {
+            DES dess = new DES();
+            string pText;
+            pText = dess.Decrypt(cipherText, key[0]);
+            pText = dess.Encrypt(pText, key[1]);
+            pText = dess.Decrypt(pText, key[0]);
+            return pText;
+
+        }
+
+        public List<string> Analyse(string plainText,string cipherText)
+        {
+            throw new NotSupportedException();
+        }
+
+    }
+}
